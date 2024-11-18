@@ -1,0 +1,11 @@
+<app-nav-bar></app-nav-bar>
+@if (!isConnected()) {
+  <app-dialog
+    [tabName]="'TAB.LISTINGS_TAB'"
+    [dialogFirstMessage]="'WALLET.NOT_CONNECTED_MESSAGE_1'"
+    [dialogSecondMessage]="'WALLET.NOT_CONNECTED_MESSAGE_2'"
+    [dialogList]="'ACCESS'"
+    [dialogTitle]="'WALLET.WALLET_NOT_CONNECTED'"
+  >
+  </app-dialog>
+}

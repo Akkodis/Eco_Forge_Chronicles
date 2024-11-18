@@ -1,0 +1,239 @@
+<img [src]="topBar" loading="lazy" alt="Top Bar" class="h-[5px] xl:h-auto" />
+<nav
+  class="bg-black text-white px-2 xl:px-4 py-2 md:py-0 flex items-center justify-between open-sans font-bold text-sm xl:text-base relative"
+  style="background: url(assets/images/slice-assets/navigationBg.png)"
+>
+  <div class="flex items-center">
+    <img
+      [src]="logo"
+      alt="Logo"
+      class="h-10 md:h-8 my-2 md:my-0 cursor-pointer"
+      loading="lazy"
+      (click)="navigateToHome()"
+    />
+    <div class="hidden xl:flex flex-wrap items-center space-x-4">
+      <div class="flex items-center gap-2 xl:gap-0 cursor-pointer">
+        @for (tab of tabs; track $index) {
+          <img
+            [src]="tabSeparator"
+            alt="tab separator"
+            class="hidden xl:block"
+          />
+          <a
+            class="hover:text-gray-300 whitespace-nowrap px-4 h-[63px] flex items-center"
+            [ngClass]="{ 'xl:bg-[#502c24]': selectedTab === tab.toLowerCase() }"
+            (click)="navigateTo(tab.toLowerCase())"
+            >{{ tab }}</a
+          >
+          @if ($index === tabs.length - 1) {
+            <img
+              [src]="tabSeparator"
+              alt="tab separator"
+              loading="lazy"
+              class="hidden xl:block"
+            />
+          }
+        }
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="hidden xl:flex flex flex-wrap items-center justify-center md:justify-end space-x-2 xl:space-x-4 mt-2 xl:mt-0"
+  >
+    <img
+      [src]="tabSeparator"
+      alt="tab separator"
+      class="hidden xl:block"
+      loading="lazy"
+    />
+    <div class="flex items-center space-x-1 xl:space-x-2">
+      <img [src]="arrowSingle" alt="arrow" class="w-4 xl:w-5" />
+      <a
+        class="hover:text-gray-300 whitespace-nowrap text-xs xl:text-sm cursor-pointer"
+        (click)="navigateToHome()"
+        >{{ backTo }}</a
+      >
+    </div>
+    <img
+      [src]="tabSeparator"
+      alt="tab separator"
+      class="hidden xl:block"
+      loading="lazy"
+    />
+    <div class="flex space-x-1 xl:space-x-2">
+      <button class="relative">
+        <img
+          [src]="shoppingCartInactive"
+          alt="cart"
+          loading="lazy"
+          class="w-8 xl:w-10"
+        />
+      </button>
+      <button>
+        <img
+          [src]="notificationInactive"
+          alt="notifications"
+          loading="lazy"
+          class="w-8 xl:w-10"
+        />
+      </button>
+      <button (click)="onAssetListing()">
+        <img
+          [src]="claimActive"
+          alt="claim"
+          loading="lazy"
+          class="w-8 xl:w-10"
+        />
+      </button>
+      <button>
+        <img
+          [src]="incentiveInactive"
+          alt="ethereal eruption"
+          loading="lazy"
+          class="w-8 xl:w-10"
+        />
+      </button>
+    </div>
+    <img
+      [src]="tabSeparator"
+      alt="tab separator"
+      class="hidden xl:block"
+      loading="lazy"
+    />
+    <div class="flex flex-col items-start">
+      <span class="text-xs xl:text-sm">{{ currency }} Balance</span>
+      <span class="font-normal flex flex-row items-center">
+        {{ balance }}
+        <img [src]="mainTokenBg" alt="ARC" class="w-5 xl:w-6 ml-1" />
+      </span>
+    </div>
+    <img
+      [src]="tabSeparator"
+      alt="tab separator"
+      class="hidden xl:block"
+      loading="lazy"
+    />
+    <app-connect-wallet-button
+      class="hidden md:block"
+    ></app-connect-wallet-button>
+  </div>
+
+  <!-- Mobile Menu Icon -->
+  <button
+    class="block xl:hidden focus:outline-none"
+    (click)="toggleMobileMenu()"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-8 w-8"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+  </button>
+
+  <!-- Mobile Menu Overlay -->
+  @if (isMobileMenuOpen) {
+    <div
+      *ngIf="isMobileMenuOpen"
+      class="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50 p-4 space-y-8"
+    >
+      <button
+        class="absolute top-4 right-4 text-white focus:outline-none"
+        (click)="toggleMobileMenu()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+
+      <div class="flex flex-col items-center space-y-6 text-center w-full">
+        @for (tab of tabs; track $index) {
+          <a
+            class="text-white text-2xl font-semibold px-6 py-2 rounded-lg hover:bg-opacity-80 hover:bg-[#502c24] transition duration-300 ease-in-out w-full text-center"
+            [ngClass]="{ 'bg-[#502c24]': selectedTab === tab.toLowerCase() }"
+            (click)="navigateTo(tab.toLowerCase()); toggleMobileMenu()"
+          >
+            {{ tab }}
+          </a>
+        }
+
+        <div class="flex flex-col items-center space-y-4">
+          <div class="flex items-center space-x-2">
+            <a
+              class="text-white text-lg hover:text-gray-300 transition duration-300 ease-in-out cursor-pointer"
+              (click)="navigateToHome()"
+            >
+              {{ backTo }}
+            </a>
+          </div>
+
+          <div class="flex space-x-4">
+            <button class="relative">
+              <img
+                [src]="shoppingCartInactive"
+                alt="cart"
+                loading="lazy"
+                class="w-10"
+              />
+            </button>
+            <button>
+              <img
+                [src]="notificationInactive"
+                alt="notifications"
+                loading="lazy"
+                class="w-10"
+              />
+            </button>
+            <button>
+              <img
+                [src]="claimInactive"
+                alt="claim"
+                loading="lazy"
+                class="w-10"
+              />
+            </button>
+            <button>
+              <img
+                [src]="incentiveInactive"
+                alt="ethereal eruption"
+                loading="lazy"
+                class="w-10"
+              />
+            </button>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-white text-sm">{{ currency }} Balance</span>
+            <span class="text-white flex items-center text-lg font-medium">
+              {{ balance }}
+              <img [src]="mainTokenBg" alt="ARC" class="w-6 ml-2" />
+            </span>
+          </div>
+
+          <app-connect-wallet-button
+            (click)="toggleMobileMenu()"
+          ></app-connect-wallet-button>
+        </div>
+      </div>
+    </div>
+  }
+</nav>

@@ -1,0 +1,11 @@
+<button class="relative" (click)="onButtonClick()">
+  <img
+    [src]="'/assets/images/slice-assets/buttonInactive.png'"
+    alt="wallet background"
+    [ngStyle]="{ 'max-width': width, width: width, height: height }"
+  />
+  <span
+    class="absolute left-2/4 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs"
+    >{{ label }}</span
+  >
+</button>

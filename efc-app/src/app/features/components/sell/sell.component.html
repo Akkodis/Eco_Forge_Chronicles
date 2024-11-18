@@ -1,0 +1,34 @@
+<app-nav-bar (assetListingAction)="onSellListing()"></app-nav-bar>
+@if (!isConnected() && showWalletDialog) {
+  <app-notification-dialog
+    [tabName]="'TAB.SELL_TAB'"
+    [dialogFirstMessage]="'WALLET.NOT_CONNECTED_MESSAGE_1'"
+    [dialogSecondMessage]="'WALLET.NOT_CONNECTED_MESSAGE_2'"
+    [dialogList]="'ACCESS'"
+    [dialogTitle]="'WALLET.WALLET_NOT_CONNECTED'"
+    (onCloseDialog)="onClose()"
+  ></app-notification-dialog>
+}
+<app-core-window></app-core-window>
+
+@if (sellListing) {
+  <app-assets-dialog
+    [tabName]="'TAB.SELL_TAB'"
+    (confirmationItemsAction)="onConfirmationItems()"
+    (listItemsAction)="onListItems()"
+    (refuseItemsAction)="onRefuseItems()"
+    [confirmationItems]="confirmationListedItems"
+    [listItems]="listAllItems"
+    (onCloseDialog)="onClose()"
+  ></app-assets-dialog>
+}
+
+@if (successListing) {
+  <app-notification-dialog
+    [tabName]="'TAB.SELL_TAB'"
+    [dialogFirstMessage]="'LISTING.SUCCESS_LISTING'"
+    [dialogTitle]="'LISTING.CONGRATS'"
+    [image]="'/assets/images/successListing.png'"
+    (onCloseDialog)="onClose()"
+  ></app-notification-dialog>
+}

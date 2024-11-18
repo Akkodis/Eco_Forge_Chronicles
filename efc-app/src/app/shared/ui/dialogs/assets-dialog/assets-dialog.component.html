@@ -1,0 +1,77 @@
+<app-dialog
+  [tabName]="tabName"
+  [contentTemplate]="assetsTemplate"
+  (closeDialogAction)="handleDialogClosed()"
+>
+</app-dialog>
+<ng-template #assetsTemplate>
+  <div class="absolute inset-0 scrollable-no-width-height text-white">
+    <div
+      class="overflow-x-auto scrollable-no-width-height flex items-center !h-[87%] flex-col mt-20 justify-between"
+    >
+      <div class="max-h-[480px] w-[97%] overflow-hidden relative">
+        <app-table-assets
+          [characterKeys]="characterKeys"
+          [headers]="headers"
+          [characters]="characters"
+          [listing]="true"
+          [addEmptyRows]="true"
+          [waitingForConfirmation]="confirmationItems || waitingForConfirmation"
+          [width]="'100%'"
+          [height]="'100%'"
+          style="width: -webkit-fill-available"
+          class="lg:ml-[14px] lg:mr-[16px]"
+        ></app-table-assets>
+      </div>
+      @if (listItems) {
+        <div class="h-1/4 flex items-center justify-center">
+          <app-button
+            [label]="'List all Items'"
+            (click)="onListItems()"
+          ></app-button>
+        </div>
+      } @else if (confirmationItems) {
+        <div class="flex flex-col items-center">
+          <h5>{{ 'ASSETS.ASSETS_CONFIRMATION_QUESTION' | translate }}</h5>
+          <div class="flex my-2">
+            <app-button
+              [label]="'Yes!'"
+              class="text-green-500 mr-2"
+              (click)="onConfirmationItems()"
+            ></app-button>
+            <app-button
+              [label]="'No!'"
+              class="ml-2 text-red-500"
+              (click)="onRefuseItems()"
+            ></app-button>
+          </div>
+          <p class="text-sm">{{ 'WALLET.WALLET_CONFIRMATION' | translate }}</p>
+        </div>
+      } @else if (waitingForConfirmation) {
+        <div
+          class="flex items-center pl-[12px] pr-[18px] h-[9.5rem] w-full justify-between cursor-pointer"
+          (click)="onTransactionConfirmed()"
+        >
+          <img
+            src="/assets/images/slice-assets/bgPopupButton.png"
+            class="h-full"
+            alt=""
+          />
+          <div class="flex items-center">
+            <h5>{{ 'WALLET.CONFIRM_TRANSACTION' | translate }}</h5>
+            <img
+              src="/assets/images/icon-assets/arrowSingle.png"
+              class="w-10 h-[2.3rem]"
+              alt=""
+            />
+          </div>
+          <img
+            src="/assets/images/slice-assets/bgPopupButton.png"
+            class="h-full rotate-180"
+            alt=""
+          />
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>

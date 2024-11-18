@@ -1,0 +1,198 @@
+<img
+  class="w-full h-full"
+  src="/assets/images/slice-assets/navRightBg.png"
+  alt=""
+/>
+<img
+  src="/assets/images/icon-assets/arrowSingle.png"
+  class="hidden lg:block absolute top-[-1.5%] left-[10%] z-10 w-8 h-8 cursor-pointer"
+  alt=""
+  (click)="onCollapseFilter()"
+/>
+
+<div
+  class="absolute inset-0 ml-2 top-[5%] h-[93%] z-10 text-white font-bold text-xs overflow-y-auto scrollable-no-width-height open-sans"
+>
+  @if (!coreFilterCollapse) {
+    <div class="relative">
+      <img
+        src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+        alt=""
+      />
+      <img src="/assets/images/slice-assets/navTopLevel.png" alt="" />
+      <img
+        src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+        alt=""
+      />
+      <h1 class="absolute left-[1%] top-1/2 -translate-y-1/2">
+        {{ 'FILTERS.FILTERS' | translate }}
+      </h1>
+      <img
+        (click)="onFilterExpanded()"
+        class="absolute right-[10%] top-1/2 -translate-y-1/2 h-10 w-10 cursor-pointer"
+        [src]="
+          filterExpanded
+            ? '/assets/images/icon-assets/Collapse.png'
+            : '/assets/images/icon-assets/Expand.png'
+        "
+        alt=""
+      />
+    </div>
+    @if (filterExpanded) {
+      <div class="flex flex-col ml-5 my-2">
+        <h4 class="mb-2">{{ 'FILTERS.STARS' | translate }}</h4>
+        <ul class="flex flex-wrap">
+          @for (star of filters.stars; track $index) {
+            <li
+              class="mr-1 cursor-pointer"
+              (click)="toggleFilter($index, 'stars')"
+            >
+              <img [src]="star" class="h-8 w-8" alt="" />
+            </li>
+          }
+        </ul>
+      </div>
+      <div class="flex flex-col mx-5 mb-2">
+        <h4 class="mb-2">{{ 'FILTERS.RARITY' | translate }}</h4>
+        <ul class="flex flex-wrap">
+          @for (rarity of filters.rarity; track $index) {
+            <li
+              class="mr-1 cursor-pointer"
+              (click)="toggleFilter($index, 'rarity')"
+            >
+              <img [src]="rarity" class="h-8 w-8" alt="" />
+            </li>
+          }
+        </ul>
+      </div>
+      <div class="flex flex-col mx-5 mb-2">
+        <h4 class="mb-2">{{ 'FILTERS.ELEMENT' | translate }}</h4>
+        <ul class="flex flex-wrap">
+          @for (element of filters.element; track $index) {
+            <li
+              class="mr-1 cursor-pointer"
+              (click)="toggleFilter($index, 'element')"
+            >
+              <img [src]="element" class="h-8 w-8" alt="" />
+            </li>
+          }
+        </ul>
+      </div>
+      <div class="mb-4 mx-5 mb-2">
+        <div class="flex items-center mb-2">
+          <h3 class="font-semibold">{{ 'FILTERS.PROFESSION' | translate }}</h3>
+          <img
+            src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+            alt=""
+            class="w-8/12 h-[2px]"
+          />
+          <img
+            (click)="isExpanded = !isExpanded"
+            class="h-4 w-4 -ml-[3px] cursor-pointer"
+            [src]="
+              isExpanded
+                ? '/assets/images/icon-assets/arrowDown.png'
+                : '/assets/images/icon-assets/arrowSingle.png'
+            "
+            alt=""
+          />
+        </div>
+        @if (isExpanded) {
+          <div class="grid grid-cols-4 gap-2">
+            @for (profession of professions; track $index) {
+              <div
+                class="relative cursor-pointer"
+                (click)="selectedProfession = profession"
+              >
+                <img
+                  [src]="
+                    selectedProfession === profession
+                      ? '/assets/images/slice-assets/backgroundTagsSmallActive.png'
+                      : '/assets/images/slice-assets/backgroundTagsSmallInactive.png'
+                  "
+                  alt=""
+                />
+                <p
+                  class="absolute font-normal left-2/4 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[9px]"
+                >
+                  {{ profession }}
+                </p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="mb-4 mx-5">
+        <div class="flex items-center mb-2">
+          <h3 class="font-semibold">Race</h3>
+          <img
+            src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+            alt=""
+            class="w-8/12 h-[2px]"
+          />
+          <img
+            (click)="isExpandedRace = !isExpandedRace"
+            class="h-4 w-4 -ml-[3px] cursor-pointer"
+            [src]="
+              isExpandedRace
+                ? '/assets/images/icon-assets/arrowDown.png'
+                : '/assets/images/icon-assets/arrowSingle.png'
+            "
+            alt=""
+          />
+        </div>
+        @if (isExpandedRace) {
+          <div class="grid grid-cols-4 gap-2">
+            @for (race of races; track $index) {
+              <div
+                class="relative cursor-pointer"
+                (click)="selectedRace = race"
+              >
+                <img
+                  [src]="
+                    selectedRace === race
+                      ? '/assets/images/slice-assets/backgroundTagsSmallActive.png'
+                      : '/assets/images/slice-assets/backgroundTagsSmallInactive.png'
+                  "
+                  alt=""
+                />
+                <p
+                  class="absolute font-normal left-2/4 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[9px]"
+                >
+                  {{ race }}
+                </p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      @for (attr of attributes; track $index) {
+        <div class="mb-2 mx-5">
+          <h3 class="font-semibold mb-2">{{ attr.name }}</h3>
+          <div class="flex items-center flex-col">
+            <input
+              type="range"
+              [value]="attr.value"
+              (input)="attr.value = $any($event.target).value"
+              [min]="attr.min"
+              [max]="attr.max"
+              class="custom-range w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+            <div class="flex flex-row w-full justify-between">
+              <span class="mr-2">0</span>
+              <span class="ml-2">{{ attr.value }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    }
+
+    @if (selectedAsset) {
+      <app-asset-selection
+        [selectedAsset]="selectedAsset"
+      ></app-asset-selection>
+    }
+  }
+</div>

@@ -1,0 +1,23 @@
+<div
+  class="fixed inset-0 z-[9999] flex content-center items-center justify-center bg-gray-800 bg-opacity-75 text-primary open-sans"
+>
+  <div
+    class="w-11/12 h-[700px] md:w-[700px] md:h-[400px] lg:w-[1150px] lg:h-[700px] relative !bg-cover !bg-center"
+    style="
+      background: url('/assets/images/slice-assets/dialogFrame.png');
+      background-size: cover;
+    "
+  >
+    <button
+      class="absolute top-2 right-2 w-[40px] h-[40px] z-50 cursor-pointer"
+      (click)="onClose()"
+      style="background: none; border: none"
+    ></button>
+    <h5
+      class="font-bold absolute left-[52.5%] md:left-[50.5%] top-[4%] md:top-[2%] lg:top-[4.2%] lg:text-base transform -translate-x-1/2 md:text-xs lg:text-sm text-white"
+    >
+      {{ tabName | translate }}
+    </h5>
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
+</div>

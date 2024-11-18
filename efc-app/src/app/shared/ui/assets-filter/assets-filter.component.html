@@ -1,0 +1,120 @@
+<img
+  class="relative w-full h-full"
+  src="/assets/images/slice-assets/navLeftBg.png"
+  alt=""
+/>
+<img
+  src="/assets/images/icon-assets/arrowLeft.png"
+  class="hidden lg:block absolute top-[-1.5%] right-[10%] z-10 w-8 h-8 cursor-pointer"
+  alt=""
+  (click)="onCollapseFilter()"
+/>
+@if (!collapsedFilter) {
+  <div
+    class="absolute top-[5%] z-10 w-full h-[93%] pr-2 text-white font-bold text-xs overflow-y-auto scrollable-no-width-height"
+  >
+    <img
+      src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+      alt=""
+    />
+    <div class="relative flex justify-center items-center">
+      <input
+        type="text"
+        placeholder="Search for cards or assets..."
+        class="w-full bg-[#100c0c] text-white py-2 pl-10 italic"
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 absolute left-3 top-2 text-white"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </div>
+    <img
+      src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+      alt=""
+    />
+    <div class="space-y-2 mt-4">
+      @for (item of assetItems; track $index) {
+        <div class="relative" (click)="toggleExpand(item)">
+          <img
+            src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+            alt=""
+          />
+          <img src="/assets/images/slice-assets/navTopLevel.png" alt="" />
+          <img
+            src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+            alt=""
+          />
+          <div class="flex items-center">
+            <img
+              [src]="'/assets/images/icon-assets/buttonRoundBlank.png'"
+              [alt]="item.name"
+              class="w-8 h-8 absolute left-[1%] top-1/2 -translate-y-1/2"
+            />
+            <h2 class="absolute left-[12%] top-1/2 -translate-y-1/2">
+              {{ item.name }}
+            </h2>
+          </div>
+          <img
+            class="absolute right-[10%] top-1/2 -translate-y-1/2 h-10 w-10 cursor-pointer"
+            [src]="
+              item.isExpanded
+                ? '/assets/images/icon-assets/Collapse.png'
+                : '/assets/images/icon-assets/Expand.png'
+            "
+            alt=""
+          />
+        </div>
+        @if (item.isExpanded && item.children) {
+          <div class="ml-4 space-y-2 mt-2">
+            @for (child of item.children; track $index) {
+              <div
+                class="flex items-center p-1 rounded cursor-pointer"
+                (click)="toggleExpand(child)"
+              >
+                <img
+                  [src]="
+                    !child.isExpanded
+                      ? '/assets/images/icon-assets/arrowSingle.png'
+                      : '/assets/images/icon-assets/arrowDown.png'
+                  "
+                  class="h-4 w-4 transition-transform duration-200"
+                  alt=""
+                />
+                <span>{{ child.name }}</span>
+              </div>
+              @if (child.isExpanded && child.children) {
+                <div class="ml-4 space-y-1 mt-1">
+                  @for (grandchild of child.children; track $index) {
+                    <div
+                      class="flex items-center cursor-pointer"
+                      (click)="selectedFilter = grandchild"
+                    >
+                      <img
+                        [src]="
+                          selectedFilter === grandchild
+                            ? '/assets/images/icon-assets/activeDiamond.png'
+                            : '/assets/images/icon-assets/inactiveDiamond.png'
+                        "
+                        class="h-2 w-4 mr-2"
+                        alt=""
+                      />
+                      <span>{{ grandchild.name }}</span>
+                    </div>
+                  }
+                </div>
+              }
+            }
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

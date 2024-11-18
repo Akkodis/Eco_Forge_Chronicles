@@ -1,0 +1,114 @@
+<div class="relative">
+  <img src="/assets/images/slice-assets/verticalSeparatorGeneral.png" alt="" />
+  <img src="/assets/images/slice-assets/navTopLevel.png" alt="" />
+  <img src="/assets/images/slice-assets/verticalSeparatorGeneral.png" alt="" />
+  <h1 class="absolute left-[1%] top-1/2 -translate-y-1/2">
+    {{ 'ASSETS.ASSET_SELECTED' | translate }}
+  </h1>
+  <img
+    (click)="assetExpanded = !assetExpanded"
+    class="absolute right-[10%] top-1/2 -translate-y-1/2 h-10 w-10 cursor-pointer"
+    [src]="
+      assetExpanded
+        ? '/assets/images/icon-assets/Collapse.png'
+        : '/assets/images/icon-assets/Expand.png'
+    "
+    alt=""
+  />
+</div>
+@if (assetExpanded) {
+  <div class="flex flex-col items-center">
+    <img
+      src="/assets/images/assetPicture.png"
+      alt="asset picture"
+      class="w-[280px] h-60 mt-4 mb-2 object-cover border-2 border-strongOrange"
+    />
+    <h3 class="text-strongOrange font-bold">{{ selectedAsset?.asset }}</h3>
+
+    <div class="flex justify-between items-center w-full mt-4 flex-col">
+      <span>{{ 'ASSETS.ASSET_QUANTITY' | translate }}</span>
+      <div class="flex items-center mt-2">
+        <img
+          src="/assets/images/icon-assets/Collapse.png"
+          (click)="decreaseQuantity()"
+          class="w-8 h-8 cursor-pointer"
+          alt=""
+        />
+        <span class="px-6 py-2 bg-lightOrange">{{ quantity }}/30</span>
+        <img
+          src="/assets/images/icon-assets/Expand.png"
+          (click)="increaseQuantity()"
+          class="w-8 h-8 cursor-pointer"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center w-full mt-4 flex-col">
+      <span>{{ 'ASSETS.ASSET_CURRENCY' | translate }}:</span>
+      <select class="bg-lightOrange text-white p-2 mt-2 rounded">
+        <option>{{ currencyName }}</option>
+      </select>
+    </div>
+
+    <div class="flex justify-between items-center w-full mt-4 flex-col">
+      <span>{{ 'ASSETS.ASSET_PRICE' | translate }}</span>
+      <div class="flex items-center mt-2">
+        <img
+          src="/assets/images/icon-assets/Collapse.png"
+          (click)="decreasePrice()"
+          class="w-8 h-8 cursor-pointer"
+          alt=""
+        />
+        <span class="px-4 bg-lightOrange px-6 py-2"
+          >{{ price }} {{ currency }}</span
+        >
+        <img
+          src="/assets/images/icon-assets/Expand.png"
+          (click)="increasePrice()"
+          class="w-8 h-8 cursor-pointer"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <div
+      class="flex justify-center items-center w-full text-white underline text-center font-bold mt-4"
+    >
+      Total Price:
+      <span class="font-normal">{{ totalPrice }} {{ currency }}</span>
+      <img [src]="currencyIcon" class="w-4 h-4" alt="" />
+    </div>
+
+    <div class="flex space-x-4 mt-6">
+      <app-button
+        (onButtonAction)="onQuickSell()"
+        width="8rem"
+        height="2.5rem"
+        [label]="'Quick Sell'"
+      ></app-button>
+      <app-button
+        (onButtonAction)="onAddToSellList()"
+        width="8rem"
+        height="2.5rem"
+        [label]="'Add to Sell List'"
+      ></app-button>
+    </div>
+  </div>
+}
+
+
+@if (assetListingDialog) {
+  <app-listing-dialog
+  [tabName]="'TAB.SELL_TAB'"
+  [totalPrice]="totalPrice"
+  [price]="price"
+  [quantity]="quantity"
+  [currencyIcon]="currencyIcon"
+  [currency]="currency"
+  [asset]="selectedAsset"
+  [totalPrice]="totalPrice"
+  (onCloseDialog)="onClose()"
+  (onConfirmationAction)="onConfirmation()"
+></app-listing-dialog>
+}

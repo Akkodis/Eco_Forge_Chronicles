@@ -1,0 +1,10 @@
+<button (click)="isConnected() ? signOut() : openSignIn()" class="relative">
+  <img
+    [src]="isConnected() ? walletDisconnectBg : walletConnectBg"
+    alt="wallet background"
+  />
+  <span
+    class="absolute left-2/4 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm"
+    >{{ isConnected() ? 'Disconnect Wallet' : 'Connect Wallet' }}</span
+  >
+</button>

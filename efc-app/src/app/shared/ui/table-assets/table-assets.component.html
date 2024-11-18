@@ -1,0 +1,136 @@
+<table
+  class="text-sm text-left text-gray-300 overflow-hidden"
+  [ngStyle]="{ width: width, height: height }"
+>
+  <thead
+    class="text-xs uppercase text-white sticky top-0 z-10 bg-transparent w-full"
+  >
+    <tr class="w-full flex items-center">
+      @if (listing) {
+        <th class="px-2 py-6 text-center w-10 shrink-0">#</th>
+      }
+      @for (header of headers; track $index) {
+        <th
+          class="px-2 py-6 whitespace-nowrap text-center relative text-[12px] flex-1"
+        >
+          {{ header }}
+        </th>
+        @if ($index < headers.length - 1 && !listing) {
+          <img
+            [src]="'/assets/images/slice-assets/verticalSeparatorNav.png'"
+            alt="tab separator"
+            loading="lazy"
+            class="hidden xl:block h-6"
+          />
+        }
+      }
+      @if (listing) {
+        <th class="px-2 py-6 text-center w-16 shrink-0 invisible">&nbsp;</th>
+      }
+    </tr>
+    <tr class="w-full">
+      <th [attr.colspan]="headers.length + (listing ? 2 : 0)" class="p-0">
+        <img
+          src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+          class="w-full h-[4px]"
+          alt="Separator"
+        />
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    #tableBody
+    [ngClass]="[
+      listing ? 'block overflow-y-auto custom-scrollbar relative'  : '',
+      waitingForConfirmation
+        ? 'bg-black/50 backdrop-blur-sm !overflow-hidden'
+        : '',
+    ]"
+    [style]="listing ? 'max-height: calc(450px - 4rem)' : ''"
+    (scroll)="onTableScroll()"
+  >
+    @for (character of characters; track $index) {
+      <tr
+        (click)="!listing ? onAssetSelected($index) : ''"
+        class="bg-opacity-80 text-center text-xs flex items-center cursor-pointer w-full"
+        [ngClass]="{
+          '!bg-selectedGreen': selectedAsset === characters[$index] && !listing,
+          'bg-oddRow': $index % 2 !== 0 && selectedAsset !== characters[$index],
+          'bg-evenRow':
+            $index % 2 === 0 && selectedAsset !== characters[$index],
+        }"
+      >
+        @if (listing) {
+          <td class="px-2 py-2 text-center w-10 shrink-0">
+            {{ $index + 1 }}
+          </td>
+        }
+        @for (key of characterKeys; track $index) {
+          <td class="px-2 py-2 whitespace-wrap text-center flex-1">
+            <ng-container [ngSwitch]="key">
+              <span
+                *ngSwitchCase="'rarity'"
+                class="flex justify-center"
+                [innerHTML]="getRarityStars(character[key])"
+              ></span>
+              <span
+                *ngSwitchCase="'element'"
+                class="flex justify-center"
+                [innerHTML]="getElement(character[key])"
+              ></span>
+              <span *ngSwitchDefault>{{ character[key] }}</span>
+            </ng-container>
+          </td>
+        }
+        @if (listing) {
+          <td class="px-2 py-2 text-center w-16 shrink-0">
+            <img
+              src="/assets/images/icon-assets/buttonError.png"
+              class="h-[2rem] w-10"
+              alt=""
+              (click)="deleteRow($index); $event.stopPropagation()"
+            />
+          </td>
+        }
+      </tr>
+    }
+    @if (addEmptyRows) {
+      @for (emptyRow of emptyRows; track $index) {
+        <tr
+          class="bg-opacity-80 text-center text-xs flex items-center w-full"
+          [ngClass]="
+            ($index + characters.length) % 2 !== 0
+              ? 'bg-[#120e0e]'
+              : 'bg-[#2e1d16]'
+          "
+        >
+          @if (listing) {
+            <td class="px-2 py-2 text-center w-10 shrink-0">&nbsp;</td>
+          }
+          @for (key of characterKeys; track $index) {
+            <td class="px-2 py-2 whitespace-wrap text-center flex-1">&nbsp;</td>
+          }
+          @if (listing) {
+            <td class="px-2 py-2 text-center w-16 shrink-0">&nbsp;</td>
+          }
+        </tr>
+      }
+    }
+    @if (waitingForConfirmation && listing) {
+      <div
+      [ngStyle]="{
+        transform: 'translateY(' + overlayOffset + 'px)'
+      }"
+      class="absolute inset-0 bg-black/50 backdrop-blur-sm z-50"
+    >
+    </div>
+    }
+  </tbody>
+</table>
+<div class="sticky bottom-0 w-full z-10">
+  <img
+    src="/assets/images/slice-assets/verticalSeparatorGeneral.png"
+    class="w-full h-[4px]"
+    alt="Separator"
+  />
+</div>

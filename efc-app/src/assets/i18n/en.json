@@ -1,0 +1,41 @@
+{
+  "TAB": {
+    "SELL_TAB": "Sell List",
+    "LISTINGS_TAB": "My Listings"
+  },
+  "WALLET": {
+    "WALLET_NOT_CONNECTED": "Wallet Not Connected",
+    "NOT_CONNECTED_MESSAGE_1": "To access your",
+    "NOT_CONNECTED_MESSAGE_2": "and manage your items, you need to connect your wallet.",
+    "WALLET_CONFIRMATION": "Please confirm your MetaMask Transaction",
+    "CONFIRM_TRANSACTION": "Confirm Transaction"
+  },
+  "ACCESS": {
+    "ITEMS_SALE": "View and manage your items for sale",
+    "BUY_TRADE": "Buy and trade assets in the marketplace",
+    "EARNINGS": "Claim earnings from your transactions",
+    "REWARDS": "Claim rewards and bonuses",
+    "BALANCE": "Access your wallet balance"
+  },
+  "FILTERS": {
+    "FILTERS": "Filters",
+    "STARS": "Stars",
+    "RARITY": "Rarity",
+    "ELEMENT": "Element",
+    "PROFESSION": "Profession",
+    "RACE": "Race"
+  },
+  "ASSETS": {
+    "ASSET_SELECTED": "Selected Item:",
+    "ASSET_QUANTITY": "Quantity",
+    "ASSET_CURRENCY": "Currency",
+    "ASSET_PRICE": "Price per Unit:",
+    "ASSET_TOTAL": "Total Price:",
+    "SUCCESS_ASSET_LISTING": "You have successfully added your item to your Sell List.",
+    "ASSETS_CONFIRMATION_QUESTION": "List Assets. Are you sure?"
+  },
+  "LISTING": {
+    "SUCCESS_LISTING": "You have successfully listed your items.",
+    "CONGRATS": "Congratulations!"
+  }
+}
