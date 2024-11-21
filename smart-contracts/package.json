@@ -2,9 +2,9 @@
   "name": "Smart_Contracts",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://bitbucket.akka.eu/scm/efc/eco-forge-chronicles---smart-contracts.git",
-  "author": "Marcel Gauss <Marcel.Gauss@akkodis.com>",
-  "license": "MIT",
+  "repository": "https://github.com/Akkodis/Eco_Forge_Chronicles.git/smart-contracts",
+  "author": "AKKODIS",
+  "license": "Apache 2.0",
   "scripts": {
     "deployProtocolContracts": "npx hardhat run ./scripts/deploy/deployProtocolContracts.ts --network iotaEVMtestnet",
     "deployDevelopmentVault": "npx hardhat run ./scripts/deploy/deployDevelopmentVault.ts --network iotaEVMtestnet",
